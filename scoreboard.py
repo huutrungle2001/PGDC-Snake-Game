@@ -5,6 +5,10 @@ class Scoreboard(Turtle):
     """
     This class is responsible for keeping track of the score. It also displays
     the score and the high score.
+
+    Attributes:
+        score (int): The current score.
+        high_score (int): The high score.
     """
 
     # Class Attributes
@@ -17,35 +21,51 @@ class Scoreboard(Turtle):
         """
         super().__init__()
         self.score = 0
-        self.get_score = 0
+        self.high_score = 0
         self.color("white")
         self.hideturtle()
         self.penup()
         self.goto(0, 270)
         self.file = open("score.txt", "r")
-        self.get_score = self.file.read()
+        self.high_score = self.file.read()
         self.file.close()
         self.write(
-            f"Score: {self.score}   High Score: {int(self.get_score)}", align=Scoreboard.ALIGNMENT, font=Scoreboard.FONT)
+            f"Score: {self.score}   High Score: {int(self.high_score)}",
+            align=Scoreboard.ALIGNMENT, font=Scoreboard.FONT)
 
     def increase_score(self, score=1):
+        """
+        Increases the score by the given amount.
+
+        Args:
+            score (int): The amount to increase the score by.
+        """
         self.score += score
         self.clear()
         file = open("score.txt", "w")
         file.write(str(self.score))
         file.close()
         self.write(
-            f"Score: {self.score} High Score: {int(self.get_score)}", align=Scoreboard.ALIGNMENT, font=Scoreboard.FONT)
+            f"Score: {self.score} High Score: {int(self.high_score)}",
+            align=Scoreboard.ALIGNMENT, font=Scoreboard.FONT)
 
     def reset(self):
-        if self.score > int(self.get_score):
-            self.get_score = self.score
+        """
+        Resets the score to 0.
+        """
+        if self.score > int(self.high_score):
+            self.high_score = self.score
         self.score = 0
         self.clear()
         self.write(
-            f"Score: {self.score}   High Score: {self.get_score}", align=Scoreboard.ALIGNMENT, font=Scoreboard.FONT)
+            f"Score: {self.score}   High Score: {self.high_score}",
+            align=Scoreboard.ALIGNMENT, font=Scoreboard.FONT)
 
     def game_over(self):
+        """
+        Displays the game over message.
+        """
         self.goto(0, 0)
-        self.write("GAME OVER!", align=Scoreboard.ALIGNMENT,
+        self.write("GAME OVER!",
+                   align=Scoreboard.ALIGNMENT,
                    font=Scoreboard.FONT)
